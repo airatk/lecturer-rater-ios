@@ -1,6 +1,3 @@
-import Foundation
-
-
 struct Rating: Identifiable {
     
     public var id: Int

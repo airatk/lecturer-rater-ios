@@ -8,14 +8,7 @@ class LecturerRaterAPI {
     
     private static func signUpOrIn(sublink signUpOrInSublink: String, username: String, password: String,
         completionHandler completion: @escaping (String?, String?) -> Void) {
-        let urlString: String = LecturerRaterAPI.domain + signUpOrInSublink
-        
-        guard let url = URL(string: urlString) else {
-            completion(nil, "Couldn't create link.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL(string: LecturerRaterAPI.domain + signUpOrInSublink)!)
         
         request.httpMethod = "POST"
         request.httpBody = [
@@ -57,16 +50,9 @@ class LecturerRaterAPI {
     
     public static func getRatings(ofLecturer lecturer: String? = nil,
         _ completion: @escaping ([Rating]?, String?) -> Void) {
-        var urlString: String = LecturerRaterAPI.domain + "/ratings"
+        let lecturerParameter: String = (lecturer == nil) ? "" : ("?lecturer=" + lecturer!)
         
-        if let lecturer = lecturer { urlString += ("?lecturer=" + lecturer) }
-        
-        guard let url = URL(string: urlString) else {
-            completion(nil, "Couldn't create link.")
-            return
-        }
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        URLSession.shared.dataTask(with: URL(string: LecturerRaterAPI.domain + "/ratings" + lecturerParameter)!) { (data, response, error) in
             guard let data = data, let response = response as? HTTPURLResponse, error == nil else {
                 DispatchQueue.main.async { completion(nil, "Couldn't connect to server.") }
                 return
@@ -103,14 +89,7 @@ class LecturerRaterAPI {
     
     public static func getMyRatings(usingToken token: String,
         _ completion: @escaping ([Rating]?, String?) -> Void) {
-        let urlString: String = LecturerRaterAPI.domain + "/my-ratings"
-        
-        guard let url = URL(string: urlString) else {
-            completion(nil, "Couldn't create link.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL(string: LecturerRaterAPI.domain + "/my-ratings")!)
         
         request.httpMethod = "POST"
         request.httpBody = [
@@ -155,14 +134,7 @@ class LecturerRaterAPI {
     
     public static func createRating(_ rating: Rating, usingToken token: String,
         _ completion: @escaping (String?) -> Void) {
-        let urlString: String = LecturerRaterAPI.domain + "/create-rating"
-        
-        guard let url = URL(string: urlString) else {
-            completion("Couldn't create link.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL(string: LecturerRaterAPI.domain + "/create-rating")!)
         
         request.httpMethod = "POST"
         request.httpBody = [
@@ -194,14 +166,7 @@ class LecturerRaterAPI {
     
     public static func removeRating(withId ratingId: Int, usingToken token: String,
         _ completion: @escaping (String?) -> Void) {
-        let urlString: String = LecturerRaterAPI.domain + "/remove-rating"
-        
-        guard let url = URL(string: urlString) else {
-            completion("Couldn't create link.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: URL(string: LecturerRaterAPI.domain + "/remove-rating")!)
         
         request.httpMethod = "POST"
         request.httpBody = [

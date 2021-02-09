@@ -24,6 +24,7 @@
 		6080BCB225CF5CB300A0514D /* LecturerRaterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6080BCB125CF5CB300A0514D /* LecturerRaterUITests.swift */; };
 		6086CD3125D2A5750016426D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 6086CD3025D2A5750016426D /* README.md */; };
 		6086CD3625D2A7240016426D /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 6086CD3525D2A7240016426D /* .gitignore */; };
+		60E0928F25D2FD8100A6FD6A /* UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E0928E25D2FD8100A6FD6A /* UIAlertController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		6080BCB325CF5CB300A0514D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6086CD3025D2A5750016426D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6086CD3525D2A7240016426D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		60E0928E25D2FD8100A6FD6A /* UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 				6080BC9125CF5CAE00A0514D /* SceneDelegate.swift */,
 				601A0DF225CFE6D8000FB779 /* Controllers */,
 				601A0E2525D03283000FB779 /* Views */,
+				60E11A4F25D2FF6600CE1F3B /* Extensions */,
 				601A0E0525CFE73B000FB779 /* Models */,
 				601A0E1325CFF369000FB779 /* Utilities */,
 				6080BC9825CF5CB200A0514D /* Assets.xcassets */,
@@ -185,6 +188,14 @@
 				6080BCB325CF5CB300A0514D /* Info.plist */,
 			);
 			path = LecturerRaterUITests;
+			sourceTree = "<group>";
+		};
+		60E11A4F25D2FF6600CE1F3B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				60E0928E25D2FD8100A6FD6A /* UIAlertController.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -329,6 +340,7 @@
 				601A0DF425CFE6D9000FB779 /* AllRatingsController.swift in Sources */,
 				601A0E2125D0327E000FB779 /* RatingCell.swift in Sources */,
 				601A0E5625D13E61000FB779 /* AppController.swift in Sources */,
+				60E0928F25D2FD8100A6FD6A /* UIAlertController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,26 +1,24 @@
 import UIKit
 
+
 class AppController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.viewControllers = [
-            UINavigationController(rootViewController: { () -> AllRatingsController in
-                let allRatingsController = AllRatingsController()
-                
-                allRatingsController.tabBarItem = UITabBarItem(title: "All Ratings", image: UIImage(named: "AllRatingsIcon"), selectedImage: nil)
-                
-                return allRatingsController
-            }()),
-            UINavigationController(rootViewController: { () -> MyRatingsController in
-                let myRatingsController = MyRatingsController()
-                
-                myRatingsController.tabBarItem = UITabBarItem(title: "My Ratings", image: UIImage(named: "MyRatingsIcon"), selectedImage: nil)
-                
-                return myRatingsController
-            }())
+            self.getTabBarItem(withTitle: "All Ratings", withImageNamed: "AllRatingsIcon", usingController: AllRatingsController()),
+            self.getTabBarItem(withTitle: "My Ratings", withImageNamed: "MyRatingsIcon", usingController: MyRatingsController())
         ]
+    }
+    
+    
+    private func getTabBarItem(withTitle title: String, withImageNamed imageName: String, usingController tabController: UIViewController) -> UINavigationController {
+        let tabNavigationController: UINavigationController = UINavigationController(rootViewController: tabController)
+        
+        tabNavigationController.tabBarItem = UITabBarItem(title: title, image: UIImage(named: imageName), selectedImage: nil)
+        
+        return tabNavigationController
     }
     
 }

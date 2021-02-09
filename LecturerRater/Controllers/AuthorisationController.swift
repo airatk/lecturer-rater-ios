@@ -20,7 +20,14 @@ class AuthorisationController: UIViewController {
         
         self.setUpUsernameInput()
         self.setUpPasswordInput()
-        self.setupKeyboardDismissOnTapOutsideOfKeyboard()
+        
+        self.setUpKeyboardDismissOnTapOutsideOfKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.usernameInput.becomeFirstResponder()
     }
     
     
@@ -121,7 +128,7 @@ class AuthorisationController: UIViewController {
         ])
     }
     
-    private func setupKeyboardDismissOnTapOutsideOfKeyboard() {
+    private func setUpKeyboardDismissOnTapOutsideOfKeyboard() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         
         tap.cancelsTouchesInView = false
