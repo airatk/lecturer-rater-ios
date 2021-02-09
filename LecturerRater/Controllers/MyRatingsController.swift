@@ -39,14 +39,9 @@ class MyRatingsController: UITableViewController {
         LecturerRaterAPI.getMyRatings(usingToken: UserDefaults.standard.string(forKey: "token")!) { (ratings, error_message) in
             if let ratings = ratings {
                 self.myRatings = ratings
-                
                 self.tableView.reloadData()
             } else {
-                let errorAlertController: UIAlertController = UIAlertController(title: "Refresh Error", message: error_message, preferredStyle: .alert)
-                
-                errorAlertController.addAction(UIAlertAction(title: "Close", style: .cancel))
-                
-                self.present(errorAlertController, animated: true)
+                self.present(UIAlertController(title: "Refresh Error", message: error_message, actionButtonTitle: "Close"), animated: true)
             }
             
             self.refreshControl?.endRefreshing()
@@ -55,9 +50,7 @@ class MyRatingsController: UITableViewController {
     
     @objc
     private func createRating() {
-        let ratingCreationNavigationController: UINavigationController = UINavigationController(rootViewController: RatingCreationController())
-        
-        self.present(ratingCreationNavigationController, animated: true)
+        self.present(UINavigationController(rootViewController: RatingCreationController()), animated: true)
     }
     
     @objc
@@ -80,7 +73,7 @@ class MyRatingsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let ratingCell = tableView.dequeueReusableCell(withIdentifier: RatingCell.reuseIDForMyRatings, for: indexPath) as! RatingCell
+        let ratingCell: RatingCell = tableView.dequeueReusableCell(withIdentifier: RatingCell.reuseIDForMyRatings, for: indexPath) as! RatingCell
         
         ratingCell.setUpSubviews(usingRating: self.myRatings[indexPath.row])
         
@@ -96,12 +89,7 @@ class MyRatingsController: UITableViewController {
             case .delete:
                 LecturerRaterAPI.removeRating(withId: self.myRatings[indexPath.row].id, usingToken: UserDefaults.standard.string(forKey: "token")!) { (error_message) in
                     guard error_message == nil else {
-                        let errorAlertController: UIAlertController = UIAlertController(title: "Deletion Error", message: error_message, preferredStyle: .alert)
-                        
-                        errorAlertController.addAction(UIAlertAction(title: "Close", style: .cancel))
-                        
-                        self.present(errorAlertController, animated: true)
-                        
+                        self.present(UIAlertController(title: "Deletion Error", message: error_message, actionButtonTitle: "Close"), animated: true)
                         return
                     }
                     
@@ -115,11 +103,7 @@ class MyRatingsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let ratingController: RatingController = RatingController()
-        
-        ratingController.rating = self.myRatings[indexPath.row]
-        
-        self.navigationController?.pushViewController(ratingController, animated: true)
+        self.navigationController?.pushViewController(RatingController(rating: self.myRatings[indexPath.row]), animated: true)
     }
     
 }

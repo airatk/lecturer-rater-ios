@@ -24,19 +24,6 @@ class RatingCell: UITableViewCell {
     private let ratingTextLabel: UILabel = UILabel()
     
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(false, animated: false)
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -48,6 +35,18 @@ class RatingCell: UITableViewCell {
         }
         
         self.ratingTextLabel.text = nil
+    }
+    
+    
+    public func setUpSubviews(usingRating rating: Rating) {
+        self.rating = rating
+        
+        self.setUpLecturerLabel()
+        self.setUpStarsStack()
+        self.setUpRatingTextLabel()
+        
+        // Setting appropriate RatingCell height by setting constraint of its bottom anchor
+        self.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.ratingTextLabel.bottomAnchor).isActive = true
     }
     
     
@@ -77,8 +76,6 @@ class RatingCell: UITableViewCell {
             }())
         }
         
-        self.starsStack.distribution = .equalSpacing
-        self.starsStack.alignment = .leading
         self.starsStack.axis = .horizontal
         self.starsStack.spacing = 6
         
@@ -93,7 +90,6 @@ class RatingCell: UITableViewCell {
     
     private func setUpRatingTextLabel() {
         self.ratingTextLabel.font = .systemFont(ofSize: 14)
-        self.ratingTextLabel.textAlignment = .left
         self.ratingTextLabel.numberOfLines = 2
         
         self.contentView.addSubview(self.ratingTextLabel)
@@ -104,18 +100,6 @@ class RatingCell: UITableViewCell {
             self.ratingTextLabel.leadingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.leadingAnchor),
             self.ratingTextLabel.trailingAnchor.constraint(equalTo: self.contentView.layoutMarginsGuide.trailingAnchor)
         ])
-    }
-    
-    
-    public func setUpSubviews(usingRating rating: Rating) {
-        self.rating = rating
-        
-        self.setUpLecturerLabel()
-        self.setUpStarsStack()
-        self.setUpRatingTextLabel()
-        
-        // Setting appropriate RatingCell height by setting constraint of its bottom anchor
-        self.contentView.layoutMarginsGuide.bottomAnchor.constraint(equalTo: self.ratingTextLabel.bottomAnchor).isActive = true
     }
     
 }

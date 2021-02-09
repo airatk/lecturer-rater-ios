@@ -13,17 +13,24 @@ class RatingCreationController: UIViewController {
         
         self.view.backgroundColor = .systemBackground
         
-        self.navigationItem.title = "New Rating"
-        
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.dismissRatingCreatingController))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.createRating))
         
+        self.navigationItem.title = "New Rating"
+        
         self.setUpLecturerInput()
         self.setUpValueSlider()
         self.setUpRatingTextInput()
+        self.setUpKeyboardDismissOnTapOutsideOfKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.lecturerInput.becomeFirstResponder()
     }
     
     
@@ -35,18 +42,13 @@ class RatingCreationController: UIViewController {
     @objc
     private func createRating() {
         guard let lecturer = self.lecturerInput.text, let ratingText = self.ratingTextInput.text, !lecturer.isEmpty, !ratingText.isEmpty else {
-            let errorAlertController: UIAlertController = UIAlertController(title: "Input Error", message: "Lecturer name or rating text cannot be empty.", preferredStyle: .alert)
-            
-            errorAlertController.addAction(UIAlertAction(title: "Close", style: .cancel))
-            
-            self.present(errorAlertController, animated: true)
-            
+            self.present(UIAlertController(title: "Input Error", message: "Lecturer name or rating text cannot be empty.", actionButtonTitle: "Close"), animated: true)
             return
         }
         
         let rating: Rating = Rating(
-            id: 0,  // ID is not used for rating creation on server, therefor is set to 0
-            userId: 0,  // User ID is not used for rating creation on server, therefor is set to 0
+            id: 0, userId: 0,  // ID & User ID are not used for rating creation on the server, therefor are set to 0
+            
             lecturer: lecturer,
             value: Int(self.valueSlider.value),
             text: ratingText
@@ -54,12 +56,7 @@ class RatingCreationController: UIViewController {
         
         LecturerRaterAPI.createRating(rating, usingToken: UserDefaults.standard.string(forKey: "token")!) { (error_message) in
             guard error_message == nil else {
-                let errorAlertController: UIAlertController = UIAlertController(title: "Input Error", message: error_message, preferredStyle: .alert)
-                
-                errorAlertController.addAction(UIAlertAction(title: "Close", style: .cancel))
-                
-                self.present(errorAlertController, animated: true)
-                
+                self.present(UIAlertController(title: "Input Error", message: error_message, actionButtonTitle: "Close"), animated: true)
                 return
             }
             
@@ -124,7 +121,7 @@ class RatingCreationController: UIViewController {
         ])
     }
     
-    private func setupKeyboardDismissOnTapOutsideOfKeyboard() {
+    private func setUpKeyboardDismissOnTapOutsideOfKeyboard() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         
         tap.cancelsTouchesInView = false
